@@ -71,6 +71,7 @@ module PricebrApple
       unless params['url_page'].nil?
         @page = Nokogiri::HTML(open(params['url_page']))
         @list_partNumber |= @page.xpath("//meta[@itemprop='sku']/@content").map {|x| x.value} unless params['url_page'] || @page.nil?
+      end
       @list_partNumber
     end
 
