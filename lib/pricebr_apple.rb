@@ -68,16 +68,14 @@ module PricebrApple
 
     # params {url_page : 'http://'}
     def get_list_partNumber(params) 
-      puts params[:url_page]
       unless params[:url_page].nil?
         @page = Nokogiri::HTML(open(params[:url_page]))
-        @list_partNumber |= @page.xpath("//meta[@itemprop='sku']/@content").map {|x| x.value} unless params[:url_page] || @page.nil?
+        @list_partNumber = @page.xpath("//meta[@itemprop='sku']/@content").map {|x| x.value} unless @page.nil?
       end
       @list_partNumber
     end
 
     def update_price 
-      pry
       PRICE_URL.each do |x,y|
         get_list_partNumber({url_page: y})
         @list_partNumber.each do |part|
