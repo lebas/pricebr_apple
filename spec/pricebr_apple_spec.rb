@@ -8,4 +8,9 @@ describe PricebrApple do
   it 'does something useful' do
     expect(false).to eq(true)
   end
+
+  it 'get list price' do
+  price =  PricebrApple::PriceBR.new
+  list = price.update_price
+  expect(list).not_to be nil
 end

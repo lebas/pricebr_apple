@@ -20,7 +20,7 @@ module PricebrApple
 	# EUA 
 	# MacBook Pro : http://www.apple.com/shop/buy-mac/macbook-pro
 
-  price_url = {
+  PRICE_URL = {
     "iPhone 6S" => "http://www.apple.com/br/shop/buy-iphone/iphone6s",
     "iPhone 6" => "http://www.apple.com/br/shop/buy-iphone/iphone6",
     "iPhone 5S" => "http://www.apple.com/br/shop/buy-iphone/iphone5s",
@@ -74,7 +74,7 @@ module PricebrApple
     end
 
     def update_price 
-      price_url.each do |x,y|
+      PRICE_URL.each do |x,y|
         self.get_list_partNumber({url_page: y})
         @list_partNumber.each do |part|
           self.get_price({url_page: y, partNumber: part})
