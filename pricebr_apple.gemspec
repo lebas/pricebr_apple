@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Eduardo Alencar"]
   spec.email         = ["lebas66@gmail.com"]
 
-  spec.summary       = %q{TODO: Prices of Apple products.}
-  spec.description   = %q{TODO: Prices of Apple products.}
+  spec.summary       = %q{Prices of Apple products.}
+  spec.description   = %q{Prices of Apple products.}
   spec.homepage      = "https://facebook.com/Solution4Mac"
   spec.license       = "MIT"
 
@@ -30,4 +30,3 @@ Gem::Specification.new do |spec|
   spec.add_dependency "nokogiri",  "1.6.1"
 end
 
-end
