@@ -76,6 +76,7 @@ module PricebrApple
     end
 
     def update_price 
+      pry
       PRICE_URL.each do |x,y|
         self.get_list_partNumber({url_page: y})
         @list_partNumber.each do |part|
