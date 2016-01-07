@@ -56,6 +56,8 @@ module PricebrApple
     		@page = Nokogiri::HTML(open(params[:url_page]))
     		list_price = @page.css('.current_price')
     		unless list_price.nil?
+          puts " partNumber => #{@model}"
+          pry
     			list_price.map{|item| @price = item.children[1].children[5].text.gsub(' ', '').gsub("\nR$",'').gsub("\n",'').gsub('.','').gsub(',','.').to_f if item.children[1].children[1].values[1].to_s == @model}
     		end
     	end 
