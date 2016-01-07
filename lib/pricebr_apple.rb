@@ -36,7 +36,7 @@ module PricebrApple
 
   class PriceBR
     def initialize
-      @url_price = @model = nil
+      @url_page = @model = nil
       @price = 0.0
       @list_partNumber = []
       @country = 'br'
@@ -51,9 +51,9 @@ module PricebrApple
 
     # params {url_page:  'http://', partNumber:  'model'}
     def get_price(params)
-    	@url_price = params['url_page']
+    	@url_page = params['url_page']
     	@model = params['partNumber']
-    	unless @url_price.nil? || @model.nil?
+    	unless @url_page.nil? || @model.nil?
     		@page = Nokogiri::HTML(open(@url_page))
     		list_price = @page.css('.current_price')
     		unless list_price.nil?
@@ -69,7 +69,7 @@ module PricebrApple
 
     # params {url_page : 'http://'}
     def get_list_partNumber(params) 
-      @url_price = params['url_page']
+      @url_page = params['url_page']
       @page = Nokogiri::HTML(open(@url_page))
       @list_partNumber |= @page.xpath("//meta[@itemprop='sku']/@content").map {|x| x.value} unless params['url_page'] || @page.nil?
       @list_partNumber
