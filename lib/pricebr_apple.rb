@@ -36,7 +36,7 @@ module PricebrApple
 
   class PriceBR
     def initialize
-      @url_page = @model = nil
+      @model = nil
       @price = 0.0
       @list_partNumber = []
       @country = 'br'
@@ -51,10 +51,9 @@ module PricebrApple
 
     # params {url_page:  'http://', partNumber:  'model'}
     def get_price(params)
-    	@url_page = params['url_page']
     	@model = params['partNumber']
-    	unless @url_page.nil? || @model.nil?
-    		@page = Nokogiri::HTML(open(@url_page))
+    	unless params['url_page'].nil? || @model.nil?
+    		@page = Nokogiri::HTML(open(params['url_page']))
     		list_price = @page.css('.current_price')
     		unless list_price.nil?
     			list_price.map{|item| @price = item.children[1].children[5].text.gsub(' ', '').gsub("\nR$",'').gsub("\n",'').gsub('.','').gsub(',','.').to_f if item.children[1].children[1].values[1].to_s == @model}
@@ -69,14 +68,16 @@ module PricebrApple
 
     # params {url_page : 'http://'}
     def get_list_partNumber(params) 
-      @url_page = params['url_page']
-      @page = Nokogiri::HTML(open(@url_page))
-      @list_partNumber |= @page.xpath("//meta[@itemprop='sku']/@content").map {|x| x.value} unless params['url_page'] || @page.nil?
+      unless params['url_page'].nil?
+        @page = Nokogiri::HTML(open(params['url_page']))
+        @list_partNumber |= @page.xpath("//meta[@itemprop='sku']/@content").map {|x| x.value} unless params['url_page'] || @page.nil?
+      end
       @list_partNumber
     end
 
     def update_price 
       PRICE_URL.each do |x,y|
+        pry
         self.get_list_partNumber({url_page: y})
         @list_partNumber.each do |part|
           self.get_price({url_page: y, partNumber: part})
