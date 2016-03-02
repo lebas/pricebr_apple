@@ -4,34 +4,19 @@ require 'open-uri'
 require 'pry'
 
 module PricebrApple
-
-	# BR
-	# iPhone 6S : http://www.apple.com/br/shop/buy-iphone/iphone6s
-	# iPhone 6 : http://www.apple.com/br/shop/buy-iphone/iphone6
-  # iPhone 5S : http://www.apple.com/br/shop/buy-iphone/iphone5s
-	# MacBook Pro : http://www.apple.com/br/shop/buy-mac/macbook-pro 
-  # MacBook Air : http://www.apple.com/br/shop/buy-mac/macbook-air
-  # MacBook : http://www.apple.com/br/shop/buy-mac/macbook
-  # iMac : http://www.apple.com/br/shop/buy-mac/imac
-  # Watch Sport : http://www.apple.com/br/shop/buy-watch/apple-watch-sport
-  # Watch : http://www.apple.com/br/shop/buy-watch/apple-watch
-  # Watch Edition : http://www.apple.com/br/shop/buy-watch/apple-watch-edition  
-  # Apple TV : http://www.apple.com/br/shop/buy-tv/apple-tv
-
 	# EUA 
 	# MacBook Pro : http://www.apple.com/shop/buy-mac/macbook-pro
-
   PRICE_URL = {
-    #{}"iPhone 6S" => "http://www.apple.com/br/shop/buy-iphone/iphone6s",
-    #{}"iPhone 6" => "http://www.apple.com/br/shop/buy-iphone/iphone6",
-    #{}"iPhone 5S" => "http://www.apple.com/br/shop/buy-iphone/iphone5s",
-    #{}"MacBook Pro" => "http://www.apple.com/br/shop/buy-mac/macbook-pro", 
-    #{}"MacBook Air" => "http://www.apple.com/br/shop/buy-mac/macbook-air",
-    #{}"MacBook" => "http://www.apple.com/br/shop/buy-mac/macbook",
-    #{}"iMac" => "http://www.apple.com/br/shop/buy-mac/imac",
-    #{}"Watch Sport" => "http://www.apple.com/br/shop/buy-watch/apple-watch-sport",
-    #{}"Watch" => "http://www.apple.com/br/shop/buy-watch/apple-watch",
-    #{}"Watch Edition" => "http://www.apple.com/br/shop/buy-watch/apple-watch-edition",
+    "iPhone 6S" => "http://www.apple.com/br/shop/buy-iphone/iphone6s",
+    "iPhone 6" => "http://www.apple.com/br/shop/buy-iphone/iphone6",
+    "iPhone 5S" => "http://www.apple.com/br/shop/buy-iphone/iphone5s",
+    "MacBook Pro" => "http://www.apple.com/br/shop/buy-mac/macbook-pro", 
+    "MacBook Air" => "http://www.apple.com/br/shop/buy-mac/macbook-air",
+    "MacBook" => "http://www.apple.com/br/shop/buy-mac/macbook",
+    "iMac" => "http://www.apple.com/br/shop/buy-mac/imac",
+    "Watch Sport" => "http://www.apple.com/br/shop/buy-watch/apple-watch-sport",
+    "Watch" => "http://www.apple.com/br/shop/buy-watch/apple-watch",
+    "Watch Edition" => "http://www.apple.com/br/shop/buy-watch/apple-watch-edition",
     "Apple TV" => "http://www.apple.com/br/shop/buy-tv/apple-tv"
   }
 
@@ -57,7 +42,6 @@ module PricebrApple
     		@page = Nokogiri::HTML(open(params[:url_page]))
     		list_price = @page.css('.current_price')
     		unless list_price.nil?
-          ### back 3 ===> 5
     			list_price.map{|item| @price = item.children[1].children[3].children[0].text.gsub(' ', '').gsub("\nR$",'').gsub("\n",'').gsub('.','').gsub(',','.').to_f if !item.nil? && item.children[1].children[1].values[1].to_s == @model}
     		end
     	end 
