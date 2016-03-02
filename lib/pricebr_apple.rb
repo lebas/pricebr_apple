@@ -44,7 +44,7 @@ module PricebrApple
     def get_price(params)
     	@model = params[:partNumber]
       url_page = PRICE_URL[params[:device]]
-    	unless url_page.nil? || @model.nil?
+    	if  !url_page.nil? && !@model.nil?
     		@page = Nokogiri::HTML(open(url_page))
     		list_price = @page.css('.current_price')
     		unless list_price.nil?
