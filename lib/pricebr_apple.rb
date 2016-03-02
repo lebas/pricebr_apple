@@ -35,11 +35,12 @@ module PricebrApple
       end
     end
 
-    # params {url_page:  'http://', partNumber:  'model'}
+    # params {device:  'device', partNumber:  'model'}
     def get_price(params)
     	@model = params[:partNumber]
-    	unless params[:url_page].nil? || @model.nil?
-    		@page = Nokogiri::HTML(open(params[:url_page]))
+      url_page = PRICE_URL[params[:device]]
+    	unless url_page.nil? || @model.nil?
+    		@page = Nokogiri::HTML(open(url_page))
     		list_price = @page.css('.current_price')
     		unless list_price.nil?
     			list_price.map{|item| @price = item.children[1].children[3].children[0].text.gsub(' ', '').gsub("\nR$",'').gsub("\n",'').gsub('.','').gsub(',','.').to_f if !item.nil? && item.children[1].children[1].values[1].to_s == @model}
