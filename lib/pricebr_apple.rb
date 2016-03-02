@@ -7,17 +7,22 @@ module PricebrApple
 	# EUA 
 	# MacBook Pro : http://www.apple.com/shop/buy-mac/macbook-pro
   PRICE_URL = {
-    "iPhone 6S" => "http://www.apple.com/br/shop/buy-iphone/iphone6s",
-    "iPhone 6" => "http://www.apple.com/br/shop/buy-iphone/iphone6",
-    "iPhone 5S" => "http://www.apple.com/br/shop/buy-iphone/iphone5s",
-    "MacBook Pro" => "http://www.apple.com/br/shop/buy-mac/macbook-pro", 
-    "MacBook Air" => "http://www.apple.com/br/shop/buy-mac/macbook-air",
-    "MacBook" => "http://www.apple.com/br/shop/buy-mac/macbook",
-    "iMac" => "http://www.apple.com/br/shop/buy-mac/imac",
-    "Watch Sport" => "http://www.apple.com/br/shop/buy-watch/apple-watch-sport",
-    "Watch" => "http://www.apple.com/br/shop/buy-watch/apple-watch",
-    "Watch Edition" => "http://www.apple.com/br/shop/buy-watch/apple-watch-edition",
-    "Apple TV" => "http://www.apple.com/br/shop/buy-tv/apple-tv"
+    "IPHONE 6S" => "http://www.apple.com/br/shop/buy-iphone/iphone6s",
+    "IPHONE 6" => "http://www.apple.com/br/shop/buy-iphone/iphone6",
+    "IPHONE 5S" => "http://www.apple.com/br/shop/buy-iphone/iphone5s",
+    "MACBOOK PRO" => "http://www.apple.com/br/shop/buy-mac/macbook-pro", 
+    "MACBOOK AIR" => "http://www.apple.com/br/shop/buy-mac/macbook-air",
+    "MACBOOK" => "http://www.apple.com/br/shop/buy-mac/macbook",
+    "IMAC" => "http://www.apple.com/br/shop/buy-mac/imac",
+    "WATCH SPORT" => "http://www.apple.com/br/shop/buy-watch/apple-watch-sport",
+    "WATCH" => "http://www.apple.com/br/shop/buy-watch/apple-watch",
+    "WATCH EDITION" => "http://www.apple.com/br/shop/buy-watch/apple-watch-edition",
+    "APPLE TV" => "http://www.apple.com/br/shop/buy-tv/apple-tv",
+    "IPAD PRO" => "",
+    "IPAD AIR 2" => "",
+    "IPAD AIR" => "",
+    "IPAD MINI 4" => "",
+    "IPAD MINI 2" => "",
   }
 
   class PriceBR
