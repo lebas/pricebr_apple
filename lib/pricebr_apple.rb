@@ -65,14 +65,16 @@ module PricebrApple
       @list_partNumber
     end
 
-    def update_price 
+    def update_price
+      list = []
       PRICE_URL.each do |x,y|
         get_list_partNumber({url_page: y})
         @list_partNumber.each do |part|
           self.get_price({url_page: y, partNumber: part})
-          puts "#{x} = #{part} = #{self.get_last_price}"
+          list << [ part, self.get_last_price ]
         end
       end
+      return list
     end
   end
 end
