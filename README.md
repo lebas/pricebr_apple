@@ -22,7 +22,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+// Brazil Price 
+ $ price =  PricebrApple::PriceBR.new 
+
+// products list with prices
+ $ list = price.update_price
 
 ## Development
 
