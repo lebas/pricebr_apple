@@ -1,4 +1,4 @@
-require "pricebr_apple/version"
+require 'pricebr_apple/version'
 require 'nokogiri'
 require 'open-uri'
 require 'pry'
@@ -8,21 +8,19 @@ module PricebrApple
 	# MacBook Pro : http://www.apple.com/shop/buy-mac/macbook-pro
   PRICE_URL = {
     "IPHONE 6S" => "http://www.apple.com/br/shop/buy-iphone/iphone6s",
-    "IPHONE 6" => "http://www.apple.com/br/shop/buy-iphone/iphone6",
+    "IPHONE SE" => "http://www.apple.com/br/shop/buy-iphone/iphone-se",
     "IPHONE 5S" => "http://www.apple.com/br/shop/buy-iphone/iphone5s",
     "MACBOOK PRO" => "http://www.apple.com/br/shop/buy-mac/macbook-pro", 
     "MACBOOK AIR" => "http://www.apple.com/br/shop/buy-mac/macbook-air",
     "MACBOOK" => "http://www.apple.com/br/shop/buy-mac/macbook",
     "IMAC" => "http://www.apple.com/br/shop/buy-mac/imac",
-    "WATCH SPORT" => "http://www.apple.com/br/shop/buy-watch/apple-watch-sport",
-    "WATCH" => "http://www.apple.com/br/shop/buy-watch/apple-watch",
-    "WATCH EDITION" => "http://www.apple.com/br/shop/buy-watch/apple-watch-edition",
     "APPLE TV" => "http://www.apple.com/br/shop/buy-tv/apple-tv",
-    "IPAD PRO" => "",
-    "IPAD AIR 2" => "",
-    "IPAD AIR" => "",
-    "IPAD MINI 4" => "",
-    "IPAD MINI 2" => "",
+    "IPAD PRO" => "http://www.apple.com/br/shop/buy-ipad/ipad-pro",
+    "IPAD AIR 2" => "http://www.apple.com/br/shop/buy-ipad/ipad-air-2",
+    "IPAD MINI 4" => "http://www.apple.com/br/shop/buy-ipad/ipad-mini-4",
+    "IPAD MINI 2" => "http://www.apple.com/br/shop/buy-ipad/ipad-mini-2",
+    "WATCH SERIES 1" => "http://www.apple.com/br/shop/buy-watch/apple-watch-series-1",
+    "WATCH" => "http://www.apple.com/br/shop/buy-watch/apple-watch",
   }
 
   class PriceBR
@@ -40,10 +38,10 @@ module PricebrApple
       end
     end
 
-    # params {device:  'device', partNumber:  'model'}
+    # params {url_page:  'device page', partNumber:  'model'}
     def get_price(params)
     	@model = params[:partNumber]
-      url_page = PRICE_URL[params[:device]]
+      url_page = params[:url_page]
     	if  !url_page.nil? && !@model.nil?
     		@page = Nokogiri::HTML(open(url_page))
     		list_price = @page.css('.current_price')
