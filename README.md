@@ -22,11 +22,13 @@ Or install it yourself as:
 
 ## Usage
 
-// Brazil Price 
- $ price =  PricebrApple::PriceBR.new 
+Brazil Price 
 
-// products list with prices
- $ list = price.update_price
+	$ price =  PricebrApple::PriceBR.new 
+
+Products list with prices
+
+	$ list = price.update_price
 
 ## Development
 
