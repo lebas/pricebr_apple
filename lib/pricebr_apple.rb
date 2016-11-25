@@ -7,9 +7,11 @@ module PricebrApple
 	# EUA 
 	# MacBook Pro : http://www.apple.com/shop/buy-mac/macbook-pro
   PRICE_URL = {
-    "IPHONE 6S" => "http://www.apple.com/br/shop/buy-iphone/iphone6s",
+    "IPHONE 6S" => "http://www.apple.com/br/shop/buy-iphone/iphone6s#00",
+    "IPHONE 6S PLUS" => "http://www.apple.com/br/shop/buy-iphone/iphone6s#01",
     "IPHONE SE" => "http://www.apple.com/br/shop/buy-iphone/iphone-se",
-    "IPHONE 5S" => "http://www.apple.com/br/shop/buy-iphone/iphone5s",
+    "IPHONE 7" => "http://www.apple.com/br/shop/buy-iphone/iphone-7#00",
+    "IPHONE 7 PLUS" => "http://www.apple.com/br/shop/buy-iphone/iphone-7#01",
     "MACBOOK PRO" => "http://www.apple.com/br/shop/buy-mac/macbook-pro", 
     "MACBOOK AIR" => "http://www.apple.com/br/shop/buy-mac/macbook-air",
     "MACBOOK" => "http://www.apple.com/br/shop/buy-mac/macbook",
@@ -45,8 +47,12 @@ module PricebrApple
     	if  !url_page.nil? && !@model.nil?
     		@page = Nokogiri::HTML(open(url_page))
     		list_price = @page.css('.current_price')
+        list_price = @page.css('.as-price-currentprice') if list_price.empty?
     		unless list_price.nil?
     			list_price.map{|item| @price = item.children[1].children[3].children[0].text.gsub(' ', '').gsub("\nR$",'').gsub("\n",'').gsub('.','').gsub(',','.').to_f if !item.nil? && item.children[1].children[1].values[1].to_s == @model}
+          @price = self.script_crawler({script: list_price, partNumber: @model}) if @price.nil?
+        else
+          @price = 0.0
     		end
     	end 
     	@price
@@ -55,6 +61,12 @@ module PricebrApple
   	def get_last_price
   		@price
   	end
+
+    # params {script:  'text', partNumber:  'model'}
+    def script_crawler(params)
+      if !params[:script].nil? && !params[:partNumber].nil?
+      end
+    end
 
     # params {url_page : 'http://'}
     def get_list_partNumber(params) 
