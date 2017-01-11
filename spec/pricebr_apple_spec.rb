@@ -9,10 +9,20 @@ describe PricebrApple do
   #expect(false).to eq(true)
   #end
 
-  it 'get list price' do
+  context ' get list price' do
     price =  PricebrApple::PriceBR.new
-    
     list = price.update_price
-    expect(list).not_to be nil
+
+    it 'list not nil' do
+      expect(list).not_to be nil
+    end
+
+    it 'get price non zero' do
+      list.each do |partnumber, price|
+        puts "PN: #{partnumber} => Price #{price}"
+        expect(partnumber).not_to be nil
+        expect(price).to satisfy { |v| v > 0 }
+      end
+    end
   end
 end
