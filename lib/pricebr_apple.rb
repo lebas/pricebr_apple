@@ -22,7 +22,8 @@ module PricebrApple
     "IPAD MINI 4" => "http://www.apple.com/br/shop/buy-ipad/ipad-mini-4",
     "IPAD MINI 2" => "http://www.apple.com/br/shop/buy-ipad/ipad-mini-2",
     "WATCH SERIES 1" => "http://www.apple.com/br/shop/buy-watch/apple-watch-series-1",
-    "WATCH" => "http://www.apple.com/br/shop/buy-watch/apple-watch",
+    "WATCH SERIE 2" => "http://www.apple.com/br/shop/buy-watch/apple-watch",
+    "WATCH SERIE 2 EDITION" =>"http://www.apple.com/br/shop/buy-watch/apple-watch/branco-cer%C3%A2mica-nuvem-pulseira-esportiva?product=MNPF2BZ/A&step=detail",
   }
 
   class PriceBR
@@ -44,13 +45,12 @@ module PricebrApple
     def get_price(params)
     	@model = params[:partNumber]
       url_page = params[:url_page]
-    	if  !url_page.nil? && !@model.nil?
+    	if !url_page.nil? && !@model.nil?
     		@page = Nokogiri::HTML(open(url_page))
     		list_price = @page.css('.current_price')
         list_price = @page.css('.as-price-currentprice') if list_price.empty?
     		unless list_price.nil?
     			list_price.map{|item| @price = item.children[1].children[3].children[0].text.gsub(' ', '').gsub("\nR$",'').gsub("\n",'').gsub('.','').gsub(',','.').to_f if !item.nil? && item.children[1].children[1].values[1].to_s == @model}
-          @price = self.script_crawler({script: list_price, partNumber: @model}) if @price.nil?
         else
           @price = 0.0
     		end
@@ -64,8 +64,32 @@ module PricebrApple
 
     # params {script:  'text', partNumber:  'model'}
     def script_crawler(params)
-      if !params[:script].nil? && !params[:partNumber].nil?
+      list = []
+      download = open(params[:url_page]) unless params[:url_page].nil?
+      unless download.nil?
+        download.each do |line|
+          if !line.nil? && (line.include? 'partNumber') && (line.include? 'currentPrice')
+            frame = line.split('"products"')
+            frame = frame.last.split('"dimensionCapacity"')
+            frame.each do |item|
+              if !item.nil? && (item.include? 'partNumber') && (item.include? 'price')
+                part = item.split('partNumber')
+                if part.size == 2
+                  partNumber, part = part[1].split('seoUrlToken')
+                  unless part.nil?
+                    part = part.split('carrierPolicyPart').first
+                    price = part.split('price').last
+                    price = self.cleaning(price)
+                  end
+                  partNumber = self.cleaning(partNumber)
+                  list << [ partNumber, price.to_f ] if !partNumber.nil? && !price.nil?
+                end
+              end
+            end 
+          end
+        end
       end
+      return list.empty? ? nil : list 
     end
 
     # params {url_page : 'http://'}
@@ -80,13 +104,23 @@ module PricebrApple
     def update_price
       list = []
       PRICE_URL.each do |x,y|
-        get_list_partNumber({url_page: y})
-        @list_partNumber.each do |part|
-          self.get_price({url_page: y, partNumber: part})
-          list << [ part, self.get_last_price ]
+        new_format = ["IPHONE 7 PLUS", "IPHONE 7", "IPHONE 6S", "IPHONE 6S PLUS", "IPHONE SE", "WATCH SERIES 1", "WATCH SERIE 2", "WATCH SERIE 2 EDITION"]
+        if (new_format.include? x)
+          sub_list = script_crawler({url_page: y})
+          list = list + sub_list unless sub_list.nil?
+        else 
+          get_list_partNumber({url_page: y})
+          @list_partNumber.each do |part|
+            self.get_price({url_page: y, partNumber: part})
+            list << [ part, self.get_last_price ]
+          end
         end
       end
       return list
+    end
+
+    def cleaning(str = nil)
+      str.to_s.gsub('"','').gsub(':','').gsub(',','').gsub('_','.') unless str.nil?
     end
   end
 end
