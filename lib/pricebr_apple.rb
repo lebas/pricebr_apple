@@ -6,24 +6,26 @@ require 'pry'
 module PricebrApple
 	# EUA 
 	# MacBook Pro : http://www.apple.com/shop/buy-mac/macbook-pro
+  COUNTRY = ['br', 'us']
   PRICE_URL = {
-    "IPHONE 6S" => "https://www.apple.com/br/shop/buy-iphone/iphone6s#00",
-    "IPHONE 6S PLUS" => "https://www.apple.com/br/shop/buy-iphone/iphone6s#01",
-    "IPHONE SE" => "https://www.apple.com/br/shop/buy-iphone/iphone-se",
-    "IPHONE 7" => "https://www.apple.com/br/shop/buy-iphone/iphone-7#00",
-    "IPHONE 7 PLUS" => "https://www.apple.com/br/shop/buy-iphone/iphone-7#01",
-    "MACBOOK PRO" => "https://www.apple.com/br/shop/buy-mac/macbook-pro", 
-    "MACBOOK AIR" => "https://www.apple.com/br/shop/buy-mac/macbook-air",
-    "MACBOOK" => "https://www.apple.com/br/shop/buy-mac/macbook",
-    "IMAC" => "https://www.apple.com/br/shop/buy-mac/imac",
-    "APPLE TV" => "https://www.apple.com/br/shop/buy-tv/apple-tv",
-    "IPAD PRO" => "https://www.apple.com/br/shop/buy-ipad/ipad-pro",
-    "IPAD AIR 2" => "https://www.apple.com/br/shop/buy-ipad/ipad-air-2",
-    "IPAD MINI 4" => "https://www.apple.com/br/shop/buy-ipad/ipad-mini-4",
-    "IPAD MINI 2" => "https://www.apple.com/br/shop/buy-ipad/ipad-mini-2",
-    "WATCH SERIES 1" => "https://www.apple.com/br/shop/buy-watch/apple-watch-series-1",
-    "WATCH SERIE 2" => "https://www.apple.com/br/shop/buy-watch/apple-watch",
-    "WATCH SERIE 2 EDITION" =>"https://www.apple.com/br/shop/buy-watch/apple-watch/branco-cer%C3%A2mica-nuvem-pulseira-esportiva?product=MNPF2BZ/A&step=detail",
+    "MACBOOK PRO" => "https://www.apple.com/INFO_COUNTRY/shop/buy-mac/macbook-pro", 
+    "IPHONE 7" => "https://www.apple.com/INFO_COUNTRY/shop/buy-iphone/iphone-7#00,20",
+    "IPHONE 7 PLUS" => "https://www.apple.com/INFO_COUNTRY/shop/buy-iphone/iphone-7#01,20",
+    "IPHONE 6S" => "https://www.apple.com/INFO_COUNTRY/shop/buy-iphone/iphone6s#00,20",
+    "IPHONE 6S PLUS" => "https://www.apple.com/INFO_COUNTRY/shop/buy-iphone/iphone6s#01,20",
+    "IPHONE SE" => "https://www.apple.com/INFO_COUNTRY/shop/buy-iphone/iphone-se#00,20",
+    "MACBOOK AIR" => "https://www.apple.com/INFO_COUNTRY/shop/buy-mac/macbook-air",
+    "MACBOOK" => "https://www.apple.com/INFO_COUNTRY/shop/buy-mac/macbook",
+    
+    "IMAC" => "https://www.apple.com/INFO_COUNTRY/shop/buy-mac/imac",
+    "APPLE TV" => "https://www.apple.com/INFO_COUNTRY/shop/buy-tv/apple-tv",
+    "IPAD PRO" => "https://www.apple.com/INFO_COUNTRY/shop/buy-ipad/ipad-pro",
+    "IPAD AIR 2" => "https://www.apple.com/INFO_COUNTRY/shop/buy-ipad/ipad-air-2",
+    "IPAD MINI 4" => "https://www.apple.com/INFO_COUNTRY/shop/buy-ipad/ipad-mini-4",
+    "IPAD MINI 2" => "https://www.apple.com/INFO_COUNTRY/shop/buy-ipad/ipad-mini-2",
+    "WATCH SERIES 1" => "https://www.apple.com/INFO_COUNTRY/shop/buy-watch/apple-watch-series-1",
+    "WATCH SERIE 2" => "https://www.apple.com/INFO_COUNTRY/shop/buy-watch/apple-watch",
+    "WATCH SERIE 2 EDITION" =>"https://www.apple.com/INFO_COUNTRY/shop/buy-watch/apple-watch/branco-cer%C3%A2mica-nuvem-pulseira-esportiva?product=MNPF2BZ/A&step=detail",
   }
 
   class PriceBR
@@ -35,10 +37,7 @@ module PricebrApple
     end
 
     def set_country(params)
-      unless params.nil?
-        @country |= params
-        @country = '' if @country.equal?('eua')
-      end
+      @country params if COUNTRY.include? params
     end
 
     # params {url_page:  'device page', partNumber:  'model'}
